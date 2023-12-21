@@ -1,0 +1,108 @@
+---
+import { ViewTransitions } from 'astro:transitions';
+import '@/styles/main.css';
+import { Aside, Player } from '@/components/index';
+	
+export const prerrender = true;
+
+interface Props {
+	title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content="Astro description" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+		<ViewTransitions fallback='swap' />
+	</head>
+	<body>
+		<div id="app">
+			<aside>
+				<Aside />
+			</aside>
+			<main>
+				<slot />
+			</main>
+			<footer>
+				<Player client:load transition:name="media-player" transition:persist />
+			</footer>
+		</div>
+	</body>
+</html>
+
+<style lang="postcss">
+	#app {
+		grid-template-columns: 280px 1fr;
+		grid-template-rows: 1fr 100px;
+		@apply grid relative h-screen p-2 gap-2;
+	}
+
+	main {
+		@apply overflow-hidden;
+	}
+	
+	footer {
+		grid-column: 1 / span 2;
+		@apply fixed w-full bottom-0 bg-zinc-900 shadow-lg z-[200];
+	}
+</style>
+
+<style is:global>
+	* {
+		user-select: none;
+	}
+
+	html {
+		font-family: 'CircularStd', system-ui, sans-serif;
+		background: #000000;
+		color: #ffffff;
+	}
+
+	@font-face {
+		font-family: 'CircularStd';
+		src: url('/fonts/CircularStd-Light.woff2') format('woff2');
+		font-weight: 300;
+		font-style: normal;
+		font-display: swap;
+	}
+
+	@font-face {
+		font-family: 'CircularStd';
+		src: url('/fonts/CircularStd-Book.woff2') format('woff2');
+		font-weight: 400;
+		font-style: normal;
+		font-display: swap;
+	}
+
+	@font-face {
+		font-family: 'CircularStd';
+		src: url('/fonts/CircularStd-Medium.woff2') format('woff2');
+		font-weight: 500;
+		font-style: normal;
+		font-display: swap;
+	}
+
+	@font-face {
+		font-family: 'CircularStd';
+		src: url('/fonts/CircularStd-Bold.woff2') format('woff2');
+		font-weight: 700;
+		font-style: normal;
+		font-display: swap;
+	}
+
+	@font-face {
+		font-family: 'CircularStd';
+		src: url('/fonts/CircularStd-Black.woff2') format('woff2');
+		font-weight: 900;
+		font-style: normal;
+		font-display: swap;
+	}
+</style>

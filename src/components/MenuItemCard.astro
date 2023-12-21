@@ -1,0 +1,52 @@
+---
+import type { IPlaylist } from '@/types/types';
+
+interface Props {
+  playlist: IPlaylist;
+}
+
+const { playlist } = Astro.props; 
+const { id, cover, title, artists } = playlist;
+const artistsString = artists.join(', ');
+---
+
+<a href={`/playlist/${id}`}>
+  <picture>
+    <img src={cover} alt={`Cover of ${title} by ${artistsString}`}>
+  </picture>
+  <div>
+    <h4>
+      {title}
+    </h4>
+    <span>
+      {artistsString}
+    </span>
+  </div>
+</a>
+
+<style lang="postcss">
+  a {
+    @apply flex items-center relative p-2 rounded-md overflow-hidden gap-5 hover:bg-zinc-800;
+  }
+
+  picture {
+    @apply w-12 h-12 flex-none;
+  }
+
+  img {
+    @apply object-cover w-full h-full rounded-md;
+  }
+
+  div {
+    @apply flex flex-wrap w-full truncate;
+  }
+
+  h4 {
+    @apply text-sm font-bold truncate;
+  }
+
+  span {
+    color: #b9b9b9;
+    @apply w-full h-10 overflow-hidden text-ellipsis text-xs;
+  }
+</style>

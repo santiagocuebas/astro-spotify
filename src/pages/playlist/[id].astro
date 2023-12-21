@@ -1,0 +1,86 @@
+---
+import { SongsTable, Button } from "@/components";
+import Layout from "@/layouts/Layout.astro";
+import { allPlaylists, songs } from "@/libs/data";
+
+const { id } = Astro.params;
+
+const playlist = allPlaylists.find((playlist) => playlist.id === id);
+const playlistSongs = songs.filter(song => song.albumId === playlist?.albumId);
+const artistsString = playlist?.artists.join(", ");
+
+const totalSeconds = playlistSongs.reduce((accumulate, song) => {
+	const [minutes, seconds] = song.duration.split(":");
+	return accumulate + Number(minutes) * 60 + Number(seconds);
+}, 0);
+---
+
+<Layout title="Spotify Clone">
+	<div id="playlist-container" transition:name=`playlist ${playlist?.id} box`>
+		<header style=`background-color: ${playlist?.color.dark};`>
+			<picture>
+				<img
+					src={playlist?.cover}
+					alt={`Cover of ${playlist?.title}`}
+					transition:name=`playlist ${playlist?.id} image`
+				/>
+			</picture>
+			<div>
+				<h2>Playlist</h2>
+				<h1 transition:name=`playlist ${playlist?.id} title`>
+					{playlist?.title}
+				</h1>
+			</div>
+			<div>
+				<span>{artistsString}</span>
+				<span transition:name=`playlist ${playlist?.id} artists`>
+					{
+						`${playlistSongs.length} songs, about ${Math.trunc(totalSeconds / 60)} min`
+					}
+				</span>
+			</div>
+		</header>
+		<div id="button-container">
+			<Button client:load id={playlist?.id} size={20} songs={playlistSongs} />
+		</div>
+		<SongsTable client:load id={playlist?.id} songs={playlistSongs} />
+		<!-- <div class="gradient"></div> -->
+	</div>
+</Layout>
+
+<style lang="postcss">
+	#playlist-container {
+		@apply flex relative flex-col h-full bg-zinc-900 overflow-hidden;
+	}
+
+	header {
+		grid-template-columns: min-content 1fr;
+		grid-auto-rows: 1fr min-content;
+		@apply grid content-end p-5 gap-x-6;
+	}
+
+	picture {
+		grid-row: 1 / span 2;
+		@apply w-52 h-52 aspect-square;
+	}
+
+	img {
+		@apply w-full h-full object-cover;
+	}
+
+	header div {
+		@apply self-center flex justify-end flex-col overflow-hidden;
+	}
+
+	h1 {
+		@apply text-6xl font-bold leading-none truncate text-ellipsis;
+	}
+
+	#button-container {
+		@apply w-full p-6 text-black;
+	}
+
+	#playlist-container .gradient {
+		@apply absolute inset-0 bg-gradient-to-t from-zinc-900 via-zinc-900/80 -z-[1];
+	}
+</style>

@@ -1,0 +1,71 @@
+---
+import type { IPlaylist } from '@/types/types';
+import { Button } from './index';
+
+interface Props {
+	playlist: IPlaylist;
+}
+
+const { playlist } = Astro.props;
+const { id, cover, title, artists } = playlist;
+const artistsString = artists.join(', ');
+---
+
+<article class="group">
+	<div id=`playlist-${id}` class="container-button">
+		<Button client:load id={id} />
+	</div>
+	<a href={`/playlist/${id}`} transition:name=`playlist ${id} box`>
+		<picture>
+			<img
+				src={cover}
+				alt={`Cover of ${title} by ${artistsString}`}
+				transition:name=`playlist ${id} image`
+			>
+		</picture>
+		<div>
+			<h4 title={title} transition:name=`playlist ${id} title`>{title}</h4>
+			<p transition:name=`playlist ${id} artists`>{artistsString}</p>
+		</div>
+	</a>
+</article>
+
+<style lang="postcss">
+	article {
+		@apply relative bg-zinc-950 shadow-lg rounded-md transition-all duration-200 hover:bg-zinc-800/95 hover:shadow-xl;
+	}
+
+	.container-button {
+		@apply absolute right-6 bottom-24 text-black translate-y-4 transition-all duration-200 opacity-0 z-[100] group-hover:translate-y-0 group-hover:opacity-100;
+	}
+
+	.is-visible {
+		@apply translate-y-0 opacity-100;
+	}
+	
+	a {
+		@apply flex relative flex-wrap w-min p-4 overflow-hidden cursor-pointer gap-3 rounded-md transition-all duration-200;
+	}
+
+	picture {
+		@apply flex-none w-40 h-40 aspect-square;
+	}
+
+	img {
+		@apply object-cover w-full h-full rounded-md;
+	}
+
+	a div {
+		max-width: 160px;
+		@apply w-full;
+	}
+
+	h4 {
+		@apply overflow-hidden font-bold text-ellipsis truncate;
+	}
+
+	p {
+    color: #b9b9b9;
+		@apply h-10 overflow-hidden text-ellipsis text-sm;
+	}
+</style>

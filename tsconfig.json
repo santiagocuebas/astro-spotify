@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "baseUrl": "C:/Users/Usuario/Documents/Workspace/astro-spotify",
+    "paths": {
+      "@/*": [
+        "src/*"
+      ]
+    },
+    "jsx": "react-jsx",
+    "jsxImportSource": "react"
+  },
+  "exclude": ["node_modules"],
+  "extends": "astro/tsconfigs/strict"
+}

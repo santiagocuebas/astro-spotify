@@ -1,0 +1,48 @@
+---
+import type { IPlaylist } from '@/types/types';
+import Layout from '@/layouts/Layout.astro';
+import { PlayListItemCard, Grettings } from '@/components/index';
+import { playlists as allPlaylist } from "@/libs/data";
+import { playlists, setPlaylists } from '@/store/music-store';
+
+let $playlists: IPlaylist[] = [];
+
+setPlaylists(allPlaylist);
+
+playlists.subscribe(({ value }) => {
+	$playlists = value;
+});
+---
+
+<Layout title="Spotify Clone">
+	<div id="playlist-container">
+		<section>
+			<Grettings />
+			<div>
+				{
+					$playlists.map(playlist => <PlayListItemCard playlist={playlist} />)
+				}
+			</div>
+		</section>
+		<div class="gradient"></div>
+	</div>
+</Layout>
+
+<style lang="postcss">
+	#playlist-container {
+		@apply flex relative w-full h-full bg-zinc-900 overflow-hidden transition-all duration-1000 z-50;
+	}
+
+	section {
+		@apply w-full top-2 px-4 overflow-y-auto z-50;
+	}
+
+	section div {
+		scrollbar-width: thin;
+		@apply flex relative gap-6 overflow-y-auto;
+	}
+
+	#playlist-container .gradient {
+		@apply absolute inset-0 bg-gradient-to-t from-zinc-900 via-zinc-900/80 -z-[1];
+	}
+</style>

@@ -1,0 +1,67 @@
+---
+import type { IPlaylist } from '@/types/types';
+import { ItemCard } from '@/components/index';
+import { HomeIcon, SearchIcon, LibraryIcon } from '@/icons/index';
+import { playlists } from '@/store/music-store';
+
+let $playlists: IPlaylist[] = [];
+
+playlists.subscribe(({ value }) => {
+	$playlists = value;
+});
+---
+
+<nav>
+	<div>
+		<ul>
+			<li>
+				<a href='/'>
+					<HomeIcon />
+					Home
+				</a>
+			</li>
+			<li>
+				<a href='/#'>
+					<SearchIcon />
+					Search
+				</a>
+			</li>
+		</ul>
+	</div>
+	<div class="down">
+		<ul>
+			<li>
+				<a href='/#'>
+					<LibraryIcon />
+				Library
+				</a>
+			</li>
+			{
+				$playlists.map(playlist => <ItemCard playlist={playlist} />)
+			}
+		</ul>
+	</div>
+</nav>
+
+<style lang="postcss">
+	nav {
+		@apply flex flex-wrap gap-2;
+	}
+
+	div {
+		@apply w-full bg-zinc-900 rounded-lg;
+	}
+
+	ul {
+		@apply p-2;
+	}
+	
+	li {
+    @apply px-4 py-1;
+  }
+  
+  a {
+    color: #b3b3b3;
+    @apply flex items-center h-10 font-bold gap-4 hover:text-white hover:cursor-pointer;
+  }
+</style>
