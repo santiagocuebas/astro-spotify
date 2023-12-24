@@ -8,3 +8,4 @@ export { default as CurrentSong } from './CurrentSong.svelte';
 export { default as Volume } from './Volume.svelte';
 export { default as SongControl } from './SongControl.svelte';
 export { default as SongsTable } from './SongsTable.svelte';
+export { default as Slider } from './Slider.svelte';

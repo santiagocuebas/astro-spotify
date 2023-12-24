@@ -11,9 +11,9 @@
 	</picture>
 	<span>
 		<h3>
-			{$currentMusic.song?.title}
+			{$currentMusic.song?.title ?? ''}
 		</h3>
-		<p>{$currentMusic.song?.artists[0]}</p>
+		<p>{$currentMusic.song?.artists[0] ?? ''}</p>
 	</span>
 </div>
 

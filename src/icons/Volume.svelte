@@ -1,5 +1,5 @@
 <script lang="ts">  
-	const { svg } = $props<{ svg: { [index: string]: string } }>();
+	export let svg: { [index: string]: string };
 </script>
 
 <svg fill="currentColor" role="presentation" height="16" width="16" aria-hidden="true" aria-label={svg.label} viewBox="0 0 16 16">

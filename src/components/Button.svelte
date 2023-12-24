@@ -9,16 +9,11 @@
 		setCurrentMusic
 	} from '@/store/music-store';
 
-	interface PropsButton {
-		id: string,
-		size?: number,
-		songs: ISong[]
-	};
+	export let id: string | undefined;
+	export let size = 16;
+	export let songs: ISong[] = [];
 
-	let { id, size = 16, songs = [] } = $props<PropsButton>();
-
-	let isPlayingCurrentPlaylist = $derived($isPlaying.value &&
-		$currentMusic.id === id);
+	$: isPlayingCurrentPlaylist = $isPlaying.value && $currentMusic.id === id;
 
 	const handleClick = async () => {
 		if ($currentMusic.id === id && $currentMusic.src) {
@@ -32,8 +27,6 @@
 					console.error('An error occurred while trying to load the .mp3 file.');
 					return;
 				});
-
-			console.log(data)
 
 			if (data !== undefined) {
 				if (data.songs.length) {
@@ -49,14 +42,14 @@
 		}
 
 		if ($currentMusic.id !== id && songs.length) {
-			setCurrentMusic(id, songs, songs[0]);
+			setCurrentMusic(id ?? '', songs, songs[0]);
 		}
 	};
 </script>
 
 <button
 	class:large={songs.length}
-	on:click={songs instanceof Array ? handleSongs : handleClick}
+	on:click={songs.length ? handleSongs : handleClick}
 >
 	<PlaySvelte
 		size={size}

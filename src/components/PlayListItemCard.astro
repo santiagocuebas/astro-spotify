@@ -13,7 +13,7 @@ const artistsString = artists.join(', ');
 
 <article class="group">
 	<div id=`playlist-${id}` class="container-button">
-		<Button client:load id={id} />
+		<Button id={id} client:idle />
 	</div>
 	<a href={`/playlist/${id}`} transition:name=`playlist ${id} box`>
 		<picture>

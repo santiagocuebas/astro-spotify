@@ -10,10 +10,11 @@
     setIsPlaying
 	} from "@/store/music-store";
 
-	const { id, songs } = $props<{ id: string, songs: ISong[] }>();
+	export let id: string | undefined;
+	export let songs: ISong[];
 
 	const handleSong = (song: ISong) => {
-		if ($currentMusic.id !== id) setCurrentMusic(id, songs, song);
+		if ($currentMusic.id !== id) setCurrentMusic(id ?? '', songs, song);
 		else if ($currentMusic.song?.id !== song.id) setCurrentSong(song);
 		else setIsPlaying(!$isPlaying.value);
 	};

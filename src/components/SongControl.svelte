@@ -1,38 +1,15 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { Slider } from '@/components/index';
 	import { PlaySvelte } from '@/icons/index';
 	import { svgPath } from '@/libs/data-buttons';
-	import {
-		isPlaying,
-		currentMusic,
-		setIsPlaying,
-    setCurrentSong
-	} from '@/store/music-store';
+	import { isPlaying, currentMusic, setIsPlaying } from '@/store/music-store';
 
-	let { audio } = $props<{ audio: HTMLAudioElement }>();
-
-	let currentTime = $state(0);
-	let audioDuration = $state(0);
-
-	function changeAudioTime(this: HTMLInputElement) {
-		audio.currentTime = Math.trunc(Number(this.value));
-	}
+	export let audio: HTMLAudioElement;
+	export let currentTime: number;
+	export let audioDuration: number;
 
 	const handleClick = () => {
 		if ($currentMusic.src) setIsPlaying(!$isPlaying.value);
-	};
-
-	const handleTimeUpdate = () => currentTime = audio.currentTime;
-
-	const handleAudioDuration = () => audioDuration = audio?.duration;
-
-	const handleEndingAudio = () => {
-		const { song, songs } = $currentMusic;
-
-		const songIndex = songs.findIndex(seeSong => seeSong.id === song?.id);
-		const newSong = songs[songIndex+1] ?? songs[0];
-
-		setCurrentSong(newSong);
 	};
 
 	const formatTime = (currentTime: number) => {
@@ -40,18 +17,6 @@
 		const seconds = String(Math.trunc(currentTime % 60)).padStart(2, '0');
 		return `${minutes}:${seconds}`;
 	};
-
-	onMount(() => {
-		audio.addEventListener('timeupdate', handleTimeUpdate);
-		audio.addEventListener('durationchange', handleAudioDuration);
-		audio.addEventListener('ended', handleEndingAudio);
-
-		return () => {
-			audio.removeEventListener('timeupdate', handleTimeUpdate);
-			audio.removeEventListener('durationchange', handleAudioDuration);
-			audio.removeEventListener('ended', handleEndingAudio);
-		};
-	});
 </script>
 
 <div>
@@ -63,14 +28,21 @@
 	<span>
 		{formatTime(currentTime)}
 	</span>
-	<input
-		type="range"
-		min="0"
-		max={audioDuration}
-		step="1"
-		value={currentTime}
-		on:input={changeAudioTime}
-	>
+	<Slider
+		value={[currentTime]}
+		min={0}
+		max={audioDuration ?? 0}
+		step={1}
+		class="w-[400px] bg-zinc-600"
+		onValueChange={(value) => {
+			const [newCurrentTime] = value;
+
+			if (Math.round(audio.currentTime) !== newCurrentTime &&
+				newCurrentTime !== Math.trunc(audio.duration)) {
+				audio.currentTime = newCurrentTime;
+			}
+		}}
+	/>
 	<span>
 		{formatTime(audioDuration)}
 	</span>
@@ -87,26 +59,5 @@
 
 	span {
 		@apply w-12 text-center;
-	}
-
-	input {
-		@apply w-[400px] h-1.5 bg-zinc-600;
-	}
-
-	input::-moz-range-thumb {
-		border: 0;
-		@apply invisible w-4 h-4 rounded-full bg-white cursor-pointer;
-	}
-
-	input::-moz-range-progress {
-		@apply h-full bg-white;
-	}
-
-	div:hover > input::-moz-range-thumb {
-		@apply visible;
-	}
-
-	div:hover > input::-moz-range-progress {
-		@apply bg-green-500;
 	}
 </style>

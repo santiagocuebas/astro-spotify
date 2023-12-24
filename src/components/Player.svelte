@@ -1,15 +1,35 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { afterUpdate, beforeUpdate, onMount } from 'svelte';
   import { CurrentSong, SongControl, Volume } from './index';
-	import { isPlaying, currentMusic, setIsPlaying } from '@/store/music-store';
+	import {
+		isPlaying,
+		currentMusic,
+		setIsPlaying,
+		setCurrentSong
+	} from '@/store/music-store';
 
 	let audioRef: HTMLAudioElement;
+	let currentTime = 0;
+	let audioDuration = 0;
 
-	$effect(() => {
+	const handleTimeUpdate = () => currentTime = audioRef.currentTime;
+
+	const handleAudioDuration = () => audioDuration = audioRef?.duration;
+
+	const handleEndingAudio = () => {
+		const { song, songs } = $currentMusic;
+
+		const songIndex = songs.findIndex(seeSong => seeSong.id === song?.id);
+		const newSong = songs[songIndex+1] ?? songs[0];
+
+		setCurrentSong(newSong);
+	};
+
+	afterUpdate(() => {
 		$isPlaying.value ? audioRef.play() : audioRef.pause();
 	});
 
-	$effect(() => {
+	beforeUpdate(() => {
 		const { src } = $currentMusic;
 
 		if (!audioRef.src.includes(src) && src) {
@@ -18,7 +38,18 @@
 		}
 	});
 
-	onMount(() => audioRef.volume = 0.15);
+	onMount(() => {
+		audioRef.volume = 0.15;
+		audioRef.addEventListener('timeupdate', handleTimeUpdate);
+		audioRef.addEventListener('durationchange', handleAudioDuration);
+		audioRef.addEventListener('ended', handleEndingAudio);
+
+		return () => {
+			audioRef.removeEventListener('timeupdate', handleTimeUpdate);
+			audioRef.removeEventListener('durationchange', handleAudioDuration);
+			audioRef.removeEventListener('ended', handleEndingAudio);
+		};
+	});
 </script>
 
 <div id='player-container'>
@@ -26,7 +57,11 @@
 		<CurrentSong />
 	</div>
 	<div id="player">
-		<SongControl bind:audio={audioRef} />
+		<SongControl
+			bind:audio={audioRef}
+			bind:currentTime={currentTime}
+			bind:audioDuration={audioDuration}
+		/>
 	</div>
 	<div id="volume">
 		<Volume bind:audio={audioRef} />

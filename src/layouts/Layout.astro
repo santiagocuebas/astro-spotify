@@ -32,7 +32,7 @@ const { title } = Astro.props;
 				<slot />
 			</main>
 			<footer>
-				<Player client:load transition:name="media-player" transition:persist />
+				<Player client:idle transition:name="media-player" transition:persist />
 			</footer>
 		</div>
 	</body>
