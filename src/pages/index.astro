@@ -2,19 +2,14 @@
 import type { IPlaylist } from '../types/types';
 import Layout from '../layouts/Layout.astro';
 import { PlayListItemCard, Grettings } from '../components/index';
-import { playlists as allPlaylist } from "../libs/data";
-import { playlists, setPlaylists } from '../store/music-store';
+import { playlists } from '../store/music-store';
 
 let $playlists: IPlaylist[] = [];
 
-setPlaylists(allPlaylist);
-
-playlists.subscribe(({ value }) => {
-	$playlists = value;
-});
+playlists.subscribe(({ value }) => $playlists = value);
 ---
 
-<Layout title="Spotify Clone">
+<Layout title="Spotify Clone" transition:persist>
 	<div id="playlist-container">
 		<section>
 			<Grettings />
