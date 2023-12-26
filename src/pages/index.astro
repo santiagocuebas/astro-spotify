@@ -1,10 +1,13 @@
 ---
 import type { IPlaylist } from '../types/types';
 import Layout from '../layouts/Layout.astro';
+import { playlists as allPlaylist } from "../libs/data";
 import { PlayListItemCard, Grettings } from '../components/index';
-import { playlists } from '../store/music-store';
+import { playlists, setPlaylists } from '../store/music-store';
 
 let $playlists: IPlaylist[] = [];
+
+setPlaylists(allPlaylist);
 
 playlists.subscribe(({ value }) => $playlists = value);
 ---

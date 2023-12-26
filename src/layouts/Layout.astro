@@ -1,8 +1,6 @@
 ---
 import { ViewTransitions } from 'astro:transitions';
 import { Aside, Player } from '../components/index';
-import { playlists } from "../libs/data";
-import { setPlaylists } from '../store/music-store';
 import '../styles/main.css';
 	
 export const prerrender = true;
@@ -12,8 +10,6 @@ interface Props {
 }
 
 const { title } = Astro.props;
-
-setPlaylists(playlists);
 ---
 
 <!doctype html>
