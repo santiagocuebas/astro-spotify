@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { allPlaylists, songs as allSongs } from '@/libs/data';
+import { allPlaylists, songs as allSongs } from '@public/data';
 
 export const GET: APIRoute = ({ request }) => {
 	const { url } = request;
@@ -12,4 +12,4 @@ export const GET: APIRoute = ({ request }) => {
 	return new Response(
 		JSON.stringify({ id, songs })
 	);
-}
+};

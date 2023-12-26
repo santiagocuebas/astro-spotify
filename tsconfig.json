@@ -2,9 +2,8 @@
   "compilerOptions": {
     "baseUrl": "C:/Users/Usuario/Documents/Workspace/astro-spotify",
     "paths": {
-      "@/*": [
-        "src/*"
-      ]
+      "@/*": ["src/*"],
+      "@public/*": ["public/*"]
     },
     "jsx": "react-jsx",
     "jsxImportSource": "react"

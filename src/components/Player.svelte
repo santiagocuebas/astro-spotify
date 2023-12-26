@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { afterUpdate, beforeUpdate, onMount } from 'svelte';
+	import { afterUpdate, onMount } from 'svelte';
   import { CurrentSong, SongControl, Volume } from './index';
 	import {
 		isPlaying,
@@ -29,7 +29,7 @@
 		$isPlaying.value ? audioRef.play() : audioRef.pause();
 	});
 
-	beforeUpdate(() => {
+	afterUpdate(() => {
 		const { src } = $currentMusic;
 
 		if (!audioRef.src.includes(src) && src) {
