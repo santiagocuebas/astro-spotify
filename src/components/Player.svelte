@@ -6,7 +6,7 @@
 		currentMusic,
 		setIsPlaying,
 		setCurrentSong
-	} from '@/store/music-store';
+	} from '../store/music-store';
 
 	let audioRef: HTMLAudioElement;
 	let currentTime = 0;

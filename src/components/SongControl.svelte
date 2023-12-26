@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { Slider } from '@/components/index';
-	import { PlaySvelte } from '@/icons/index';
-	import { svgPath } from '@/libs/data-buttons';
-	import { isPlaying, currentMusic, setIsPlaying } from '@/store/music-store';
+	import { Slider } from '../components/index';
+	import { PlaySvelte } from '../icons/index';
+	import { svgPath } from '../libs/data-buttons';
+	import { isPlaying, currentMusic, setIsPlaying } from '../store/music-store';
 
 	export let audio: HTMLAudioElement;
 	export let currentTime: number;

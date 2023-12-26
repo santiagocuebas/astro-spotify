@@ -1,13 +1,13 @@
 <script lang="ts">
-	import type { ISong, ResponseData } from '@/types/types';
-	import { PlaySvelte } from '@/icons';
-	import { svgPath } from '@/libs/data-buttons';
+	import type { ISong, ResponseData } from '../types/types';
+	import { PlaySvelte } from '../icons';
+	import { svgPath } from '../libs/data-buttons';
 	import {
 		isPlaying,
 		currentMusic,
 		setIsPlaying,
 		setCurrentMusic
-	} from '@/store/music-store';
+	} from '../store/music-store';
 
 	export let id: string | undefined;
 	export let size = 16;

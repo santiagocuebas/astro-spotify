@@ -1,14 +1,14 @@
 <script lang="ts">
-	import type { ISong } from "@/types/types";
-	import { PlaySvelte, TimeIcon } from '@/icons/index';
-	import { svgPath } from '@/libs/data-buttons';
+	import type { ISong } from "../types/types";
+	import { PlaySvelte, TimeIcon } from '../icons/index';
+	import { svgPath } from '../libs/data-buttons';
   import {
 		currentMusic,
 		isPlaying,
 		setCurrentMusic,
 		setCurrentSong,
     setIsPlaying
-	} from "@/store/music-store";
+	} from "../store/music-store";
 
 	export let id: string | undefined;
 	export let songs: ISong[];

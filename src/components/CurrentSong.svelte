@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { currentMusic } from '@/store/music-store';
+	import { currentMusic } from '../store/music-store';
 </script>
 
 <div>
