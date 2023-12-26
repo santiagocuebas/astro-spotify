@@ -1,15 +1,7 @@
 ---
-import type { IPlaylist } from '../types/types';
-import Layout from '../layouts/Layout.astro';
-import { playlists as allPlaylist } from "../libs/data";
 import { PlayListItemCard, Grettings } from '../components/index';
-import { playlists, setPlaylists } from '../store/music-store';
-
-let $playlists: IPlaylist[] = [];
-
-setPlaylists(allPlaylist);
-
-playlists.subscribe(({ value }) => $playlists = value);
+import Layout from '../layouts/Layout.astro';
+import { playlists } from "../libs/data";
 ---
 
 <Layout title="Spotify Clone" transition:persist>
@@ -18,7 +10,7 @@ playlists.subscribe(({ value }) => $playlists = value);
 			<Grettings />
 			<div>
 				{
-					$playlists.map(playlist => <PlayListItemCard playlist={playlist} />)
+					playlists.map(playlist => <PlayListItemCard playlist={playlist} />)
 				}
 			</div>
 		</section>
