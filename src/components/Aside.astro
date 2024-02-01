@@ -1,8 +1,10 @@
 ---
 import type { IPlaylist } from '../types/types';
-import { ItemCard } from '../components/index';
-import { HomeIcon, SearchIcon, LibraryIcon } from '../icons/index';
 import { playlists } from '../store/music-store';
+import ItemCard from './MenuItemCard.astro';
+import HomeIcon from '../icons/Home.astro';
+import SearchIcon from '../icons/Search.astro';
+import LibraryIcon from '../icons/Library.astro';
 
 let $playlists: IPlaylist[] = [];
 

@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { Slider } from "../components/index";
-	import { VolumeSvelte } from '../icons/index';
 	import { highVolume, silence } from '../libs/data-buttons';
+	import Slider from "./Slider.svelte";
+	import VolumeSvelte from '../icons/Volume.svelte';
 
 	export let audio: HTMLAudioElement;
 

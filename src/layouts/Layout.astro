@@ -1,8 +1,9 @@
 ---
 import { ViewTransitions } from 'astro:transitions';
-import { Aside, Player } from '../components/index';
 import { playlists } from "../libs/data";
 import { setPlaylists } from '../store/music-store';
+import Aside from '../components/Aside.astro';
+import Player from '../components/Player.svelte';
 import '../styles/main.css';
 	
 export const prerrender = true;
@@ -25,7 +26,7 @@ setPlaylists(playlists);
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
-		<ViewTransitions fallback='swap' />
+		<ViewTransitions fallback='animate' />
 	</head>
 	<body>
 		<div id="app">

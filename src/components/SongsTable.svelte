@@ -1,6 +1,5 @@
 <script lang="ts">
 	import type { ISong } from "../types/types";
-	import { PlaySvelte, TimeIcon } from '../icons/index';
 	import { svgPath } from '../libs/data-buttons';
   import {
 		currentMusic,
@@ -9,6 +8,8 @@
 		setCurrentSong,
     setIsPlaying
 	} from "../store/music-store";
+	import PlaySvelte from '../icons/Play.svelte';
+	import TimeSvelte from '../icons/Time.svelte';
 
 	export let id: string | undefined;
 	export let songs: ISong[];
@@ -32,7 +33,7 @@
 			<span>Album</span>
 		</div>
 		<div class="time">
-			<span><TimeIcon /></span>
+			<span><TimeSvelte /></span>
 		</div>
 	</div>
 	{#each songs as song}

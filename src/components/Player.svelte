@@ -1,12 +1,14 @@
 <script lang="ts">
 	import { afterUpdate, onMount } from 'svelte';
-  import { CurrentSong, SongControl, Volume } from './index';
 	import {
 		isPlaying,
 		currentMusic,
 		setIsPlaying,
 		setCurrentSong
 	} from '../store/music-store';
+  import CurrentSong from './CurrentSong.svelte';
+  import SongControl from './SongControl.svelte';
+  import Volume from './Volume.svelte';
 
 	let audioRef: HTMLAudioElement;
 	let currentTime = 0;

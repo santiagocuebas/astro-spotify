@@ -1,6 +1,5 @@
 <script lang="ts">
 	import type { ISong, ResponseData } from '../types/types';
-	import { PlaySvelte } from '../icons';
 	import { svgPath } from '../libs/data-buttons';
 	import {
 		isPlaying,
@@ -8,6 +7,7 @@
 		setIsPlaying,
 		setCurrentMusic
 	} from '../store/music-store';
+	import PlaySvelte from '../icons/Play.svelte';
 
 	export let id: string | undefined;
 	export let size = 16;
@@ -16,6 +16,7 @@
 	$: isPlayingCurrentPlaylist = $isPlaying.value && $currentMusic.id === id;
 
 	const handleClick = async () => {
+		console.log('Hola');
 		if ($currentMusic.id === id && $currentMusic.src) {
 			setIsPlaying(!$isPlaying.value);
 		}
